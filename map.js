@@ -157,17 +157,20 @@ function onPersonMarkerClick(e) {
 function onStateClick(e) {
     var layer = e.target;
 
+    selectMapTab(1);
+    SelectLayer(layer);
     updateStateInfoWindow(layer.feature.properties);
     showStateInfoWindow();
-    SelectLayer(layer);
+    
 }
 
 function onStateListButtonPress(e) {
     const stateLayer = getStateLayerById(e.target.dataset.stateId);
 
+    SelectLayer(stateLayer);
     updateStateInfoWindow(stateLayer.feature.properties);
     showStateInfoWindow();
-    SelectLayer(stateLayer);
+    
 }
 
 function onStateMouseOver(e) {
@@ -226,11 +229,19 @@ function updateStateInfoWindow(stateData) {
 function showStateInfoWindow() {
     const button = document.getElementById('tab-button-1');
 
-    // If no state is selected
+    const stateList = document.getElementsByClassName('map-section__info-panel-state--state-list')[0];
+    const stateInfo = document.getElementsByClassName('map-section__info-panel-state--state-data')[0];
 
-    // Hide the state info section
-
-    // Show a list of states the user can select.
+    // If there's a currently selected state, then show the state info.
+    if(selectedLayer) {
+        updateStateInfoWindow(selectedLayer.feature.properties);
+        stateList.setAttribute('aria-hidden', true);
+        stateInfo.setAttribute('aria-hidden', false);
+    } else {
+        // If there's no currently selected state, show the state list.
+        stateList.setAttribute('aria-hidden', false);
+        stateInfo.setAttribute('aria-hidden', true);
+    }
 }
 
 
@@ -255,21 +266,82 @@ function SelectLayer(layer) {
 }
 
 function DeSelectLayer(layer) {
-    layer.setStyle(defaultStateBorder);
-    selectedLayer = false;
+    if(layer) {
+        layer.setStyle(defaultStateBorder);
+        selectedLayer = false;
+    }
 }
 
 
-/**
- * 
- * Zooms map the coords given. Generally used by the SelectPerson function, as opposed to selecting a state or territory.
- * 
- * @param {*} coords 
- */
-function ZoomToCoords(coords) {
+function InitializeTabs() {
+    const tabs = [...document.getElementsByClassName("map-section__tab-button")];
 
+    tabs.forEach(button => {
+        button.onclick = onTabButtonClick;
+    });
+}
+
+function selectMapTab(index) {
+    const tabs = [...document.getElementsByClassName("map-section__tab")];
+    const activeTab = document.getElementsByClassName("map-section__tab--selected")[0];
+
+    // If the currently active tab is the same nth child as index, do nothing.
+    if(activeTab == tabs[index]) {
+        return;
+    }
+
+    tabs.forEach(tab => {
+        
+        if(tab == tabs[index]) {
+            tab.classList.add('map-section__tab--selected');
+            const button = tab.getElementsByTagName('button')[0];
+            const panel = document.getElementById(button.getAttribute('aria-controls'));
+
+            button.setAttribute('aria-selected', true);
+            panel.setAttribute('aria-hidden', false);
+        } else {
+            // If this isn't the active tab, then make sure it's hidden.
+            tab.classList.remove('map-section__tab--selected');
+            const button = tab.getElementsByTagName('button')[0];
+            const panel = document.getElementById(button.getAttribute('aria-controls'));
+            button.setAttribute('aria-selected', false);
+            panel.setAttribute('aria-hidden', true);
+        }
+    });
+
+}
+
+function onTabButtonClick(e) {
+    const button = e.target;
+
+    // get the curently active button. it will have aria-selected=true
+    const activeButton = document.querySelector('.map-section__tab-button[aria-selected="true"]');
+
+    // Get the first, second, and third list items under: .map-section__tabs
+    const listItems = [...document.querySelectorAll('.map-section__tabs li')];
+
+    // If the active button is the same as the one clicked, and it's the first child, do nothing.
+    if(activeButton === button && button == listItems[0].firstChild) {
+        return;
+    }
+
+    // If the active button is the same as the one clicked, and it's the third button, hide the person info and
+    // show the person list.
+    if(activeButton === button && button == listItems[0].firstChild) {
+        return;
+    }
+
+    selectMapTab(listItems.indexOf(button.parentElement));
+
+    // If this is the state tab, show the state selection list.
+    if(button == listItems[1].firstChild) {
+        // Clear the currently selected state.
+        DeSelectLayer(selectedLayer);
+        showStateInfoWindow();
+    }
 }
 
 
 InitializeMap();
 PopulateStatesList();
+InitializeTabs();

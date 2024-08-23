@@ -44,3 +44,9 @@
     display: none;
 }
 
+
+
+/*  Specific to the state pane */
+.map-section__info-panel-state[aria-hidden=true] {
+    display: none;
+}
