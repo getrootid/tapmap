@@ -1,0 +1,46 @@
+.map-section {
+    height: 22rem;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.map-section__map-wrapper {
+    flex: 0 0 60%;
+    height: 100%;
+}
+
+.map-section__map {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* Top Level Tabs */
+
+.map-section__tabs {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+}
+
+.map-section__tab {
+
+}
+
+.map-section__tab button {
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.map-section__tab button[aria-selected=true] {
+    border-bottom: 3px solid black;
+}
+
+/* Tab Body */
+
+.map-section__info-panel-body[aria-hidden=true] {
+    display: none;
+}
+
