@@ -50,3 +50,7 @@
 .map-section__info-panel-state[aria-hidden=true] {
     display: none;
 }
+
+.map-section__info-panel-person[aria-hidden=true] {
+    display: none;
+}

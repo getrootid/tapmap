@@ -3,6 +3,7 @@
 var map;
 var stateLayers = null;
 var selectedLayer = null;
+var selectedPerson = null;
 
 const defaultStateBorder = {
     opacity: 0,
@@ -98,6 +99,20 @@ function PopulateStatesList() {
     });
 }   
 
+function populatePeopleList() {
+    const elPeopleList = document.getElementById('info-panel-person__people');
+
+    peopleData.forEach(person => {
+        const li = document.createElement('li');
+        const button = document.createElement('button');
+        button.appendChild(document.createTextNode(person.name));
+        button.setAttribute('data-person-id', person.name);
+        button.onclick = onPersonListButtonPress;
+
+        li.appendChild(button);
+        elPeopleList.appendChild(li);
+    });
+}
 
 /**
  * Shows all people on the map, used during map initialization.
@@ -116,10 +131,16 @@ function ShowPeople() {
 
         marker.person = person;
         marker.on('click', onPersonMarkerClick);
+        person.marker = marker;
         
         marker.addTo(map)
     });
 }
+
+function getMarkerFromPerson(person) {
+    return person.marker;
+}
+
 
 /**
  * Makes all states clickable.
@@ -145,7 +166,11 @@ function ShowStates() {
 function onPersonMarkerClick(e) {
     const marker = e.target;
 
-    console.log(marker.person);
+    // Show the third tab.
+    selectMapTab(2);
+
+    // Update the person tab.
+    SelectPerson(marker.person);
 }
 
 /**
@@ -223,7 +248,27 @@ function updateStateInfoWindow(stateData) {
             elLawSchoolsWrapper.appendChild(li);
         });
     }
-    
+}
+
+function updatePersonInfoWindow(personData) {
+    const elName = document.getElementById('info-panel-person__name');
+    // const elStudentCount = document.getElementById('info-panel-state__num-students');
+    // const elLawSchoolsWrapper = document.getElementById('info-panel-state__law-schools');
+
+    // console.log(stateData);
+
+    elName.innerHTML = personData.name;
+    // elStudentCount.innerHTML = stateData.studentCount;
+
+    // elLawSchoolsWrapper.replaceChildren();
+
+    // if(stateData.lawSchools) {
+    //     stateData.lawSchools.forEach(school => {
+    //         const li = document.createElement('li');
+    //         li.appendChild(document.createTextNode(school));
+    //         elLawSchoolsWrapper.appendChild(li);
+    //     });
+    // }
 }
 
 function showStateInfoWindow() {
@@ -244,6 +289,23 @@ function showStateInfoWindow() {
     }
 }
 
+function showPersonInfoWindow() {
+    const button = document.getElementById('tab-button-2');
+
+    const personList = document.getElementsByClassName('map-section__info-panel-person--list')[0];
+    const personInfo = document.getElementsByClassName('map-section__info-panel-person--data')[0];
+
+    // If there's a currently selected state, then show the state info.
+    if(selectedPerson) {
+        updatePersonInfoWindow(selectedPerson);
+        personList.setAttribute('aria-hidden', true);
+        personInfo.setAttribute('aria-hidden', false);
+    } else {
+        // If there's no currently selected state, show the state list.
+        personList.setAttribute('aria-hidden', false);
+        personInfo.setAttribute('aria-hidden', true);
+    }
+}
 
 
 /**
@@ -252,7 +314,10 @@ function showStateInfoWindow() {
  * @param {*} personDetails 
  */
 function SelectPerson(personDetails) {
+    selectedPerson = personDetails;
 
+    updatePersonInfoWindow(personDetails);
+    showPersonInfoWindow();
 }
 
 function SelectLayer(layer) {
@@ -311,6 +376,16 @@ function selectMapTab(index) {
 
 }
 
+function onPersonListButtonPress(e) {
+    const person = peopleData.find(person => person.name == e.target.dataset.personId);
+
+    // Zoom in on this person's marker.
+    const marker = getMarkerFromPerson(person);
+    map.setView(marker.getLatLng(), 10);
+
+    SelectPerson(person);
+}
+
 function onTabButtonClick(e) {
     const button = e.target;
 
@@ -339,9 +414,17 @@ function onTabButtonClick(e) {
         DeSelectLayer(selectedLayer);
         showStateInfoWindow();
     }
+
+    // If this is the person tab, show the person selection list.
+    if(button == listItems[2].firstChild) {
+        // Clear the currently selected state.
+        selectedPerson = null;
+        showPersonInfoWindow();
+    }
 }
 
 
 InitializeMap();
 PopulateStatesList();
+populatePeopleList();
 InitializeTabs();
