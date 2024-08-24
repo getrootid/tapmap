@@ -41,16 +41,16 @@ const peopleData = [
         "image": "https://media.licdn.com/dms/image/v2/D5603AQFu3HgMXPPjCw/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1719858694235?e=1729728000&v=beta&t=haPs9E9UJsovBZB0Xgh4J6cVB2YeWJVZN7OEw_wAw7M",
         "law_school": "San Franciso State University",
         "employer": "rootid",
-        "lat": 42.006186,
-        "lng": -123.233256
+        "lat": 37.904200,
+        "lng": -122.294460
     },
     {
         "name": "Rosalee Mickela",
         "image": "",
         "law_school": "Harding Elementary",
         "employer": "Jason Neumark Mickela",
-        "lat": 42.006186,
-        "lng": -123.433256
+        "lat": 38.904200,
+        "lng": -121.294460
     }
 
 ]
