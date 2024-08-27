@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   
+  <link rel="stylesheet" href="https://use.typekit.net/wbv2tcx.css">
   <link rel="stylesheet" href="map.css">
   <script src="states.js"></script>
 </head>
@@ -22,21 +23,22 @@
 
     <div class="map-section__info-panel">
         <div class="map-section__info-panel-header">
-            <div class="map-section__search-wrapper">
-                
-            </div>
-
             <nav class="map-section__tabs-wrapper">
                 <ul class="map-section__tabs" role="tablist">
                     <li class="map-section__tab map-section__tab--selected"><button class="map-section__tab-button" id="tab-button-0" aria-controls="info-panel-body-0" role="tab" aria-selected="true">United States</button></li>
                     <li class="map-section__tab map-section__tab"><button class="map-section__tab-button" id="tab-button-1" aria-controls="info-panel-body-1" role="tab" aria-selected="false">State</button></li>
-                    <li class="map-section__tab map-section__tab"><button class="map-section__tab-button" id="tab-button-2" aria-controls="info-panel-body-2" role="tab" aria-selected="false">Student</button></li>
+                    <li class="map-section__tab map-section__tab"><button class="map-section__tab-button" id="tab-button-2" aria-controls="info-panel-body-2" role="tab" aria-selected="false">Student Profiles</button></li>
                 </ul>
             </nav>
         </div>
 
-        <div id="info-panel-body-0" class="map-section__info-panel-body" aria-hidden="false">
-            Top level united states data, does this ever change?
+        <div id="info-panel-body-0" class="map-section__info-panel-body map-section__info-panel-body--us" aria-hidden="false">
+            <h3>A Title of this Map Can Go Here</h3>
+            <p>Static information - intro to this map, how to use, etc. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+Does this need a call to action of any sort?
+            </p>
+
+
         </div>
         <div id="info-panel-body-1" class="map-section__info-panel-body" aria-hidden="true">
             <div class="map-section__info-panel-state map-section__info-panel-state--state-data" aria-hidden="true">

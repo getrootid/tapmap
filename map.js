@@ -4,6 +4,7 @@ var map;
 var stateLayers = null;
 var selectedLayer = null;
 var selectedPerson = null;
+var defaultLocation = [38.505, -100.09];
 
 const defaultStateBorder = {
     opacity: 0,
@@ -57,13 +58,32 @@ const peopleData = [
 
 
 function InitializeMap() {
-    map = L.map('map-section__map').setView([38.505, -100.09], 4);
+    map = L.map('map-section__map').setView(defaultLocation, 4);
 
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
+    // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //     maxZoom: 19,
+    //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    // }).addTo(map);
+
+    L.tileLayer('http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
         maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        attribution: '&copy; ESRI'
     }).addTo(map);
 
+    // Free, too dark. No lines between states.
+    // L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
+    //     maxZoom: 19,
+    //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+    // }).addTo(map);
+
+    // Free? Need an account.
+    // L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+    //     maxZoom: 19,
+    //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+    // }).addTo(map);
+
+    
 
     ShowPeople();
     ShowStates();
@@ -81,8 +101,6 @@ function PopulateStatesList() {
     const elStateList = document.getElementById('info-panel-state__states');
 
     statesData.features.forEach(state => {
-
-
         const li = document.createElement('li');
         const button = document.createElement('button');
         button.appendChild(document.createTextNode(state.properties.name));
@@ -388,6 +406,11 @@ function onPersonListButtonPress(e) {
 
 function onTabButtonClick(e) {
     const button = e.target;
+
+    // If the button is in the first list item, reset the map view
+    if(button.parentElement == document.querySelector('.map-section__tabs li:first-child')) {
+        map.setView(defaultLocation, 4);
+    }
 
     // get the curently active button. it will have aria-selected=true
     const activeButton = document.querySelector('.map-section__tab-button[aria-selected="true"]');

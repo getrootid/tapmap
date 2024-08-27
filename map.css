@@ -1,12 +1,41 @@
+:root {
+    --color--light-gray: #D4D4D4;
+    --color--medium-gray: #666;
+    --color--blue: #1431AF;
+    --color--light-blue: #0080FF;
+    --color--dark-blue: #233A5B;
+
+    --font--main: serif;
+}
+
+
+
+body {
+    padding: 0;
+    margin: 0;
+    color: white;
+    background: var(--color--dark-blue);
+    font-family: var(--font--main);
+    line-height: 1.1rem;
+}
+
+button {
+    color: white;
+    font-family: var(--font--main);
+    line-height: 1.1rem;
+    font-size: 1rem;
+}
+
 .map-section {
-    height: 22rem;
+    height: 36.1875rem;
 
     display: flex;
     flex-direction: row;
+    background: var(--color--dark-blue);
 }
 
 .map-section__map-wrapper {
-    flex: 0 0 60%;
+    flex: 0 0 55%;
     height: 100%;
 }
 
@@ -16,12 +45,31 @@
 }
 
 
+.map-section__info-panel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2rem 1.5rem;
+    max-height: 100%;
+    height: 100%;
+    box-sizing: border-box;
+
+    overflow-y: auto;
+}
+
 /* Top Level Tabs */
+
+.map-section__tabs-wrapper {
+    margin-bottom: 3rem;
+}
 
 .map-section__tabs {
     display: flex;
+    justify-content: space-between;
     flex-direction: row;
     list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 .map-section__tab {
@@ -32,13 +80,43 @@
     border: 0;
     background: none;
     cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    z-index: 1;
+    position: relative;
 }
 
-.map-section__tab button[aria-selected=true] {
-    border-bottom: 3px solid black;
+.map-section__tab button[aria-selected=true]::after {
+    content: "";
+    display: block;
+    width: calc(100% + 8px);
+    height: 9px;
+    background: var(--color--light-blue);
+    position: relative;
+    left: -4px;
+    top: -8px;
+    z-index: -1;
 }
 
 /* Tab Body */
+
+.map-section__info-panel-body {
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+.map-section__info-panel-body h3 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: normal;
+}
+
+.map-section__info-panel-body--us {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+    font-size: 0.9rem;
+}
 
 .map-section__info-panel-body[aria-hidden=true] {
     display: none;
@@ -47,6 +125,52 @@
 
 
 /*  Specific to the state pane */
+
+
+.map-section__info-panel-field-label {
+    font-size: 0.9rem;
+    line-height: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+ul#info-panel-state__states {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+ul#info-panel-state__states button {
+    background: transparent;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    font-size: 0.9rem;
+    line-height: 2.75em;
+    align-items: center;
+    border: 0;
+}
+
+ul#info-panel-state__states button:before {
+    content: "";
+    display: block;
+    width: 18px;
+    height: 24px;
+    margin-right: 2rem;
+    background-image: url(./images/marker.svg);
+}
+
+ul#info-panel-state__states button:after {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 17.23px;
+    margin-left: auto;
+    background-image: url(./images/arrow.svg);
+}
+
+
 .map-section__info-panel-state[aria-hidden=true] {
     display: none;
 }
