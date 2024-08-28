@@ -5,10 +5,12 @@
     --color--light-blue: #0080FF;
     --color--dark-blue: #233A5B;
 
-    --font--main: serif;
+    --font--main: source-serif-pro, serif;
 }
 
-
+.leaflet-container {
+    font-family: var(--font--main);
+}
 
 body {
     padding: 0;

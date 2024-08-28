@@ -6,22 +6,33 @@ var selectedLayer = null;
 var selectedPerson = null;
 var defaultLocation = [38.505, -100.09];
 
-const defaultStateBorder = {
+const defaultStateStyle = {
     opacity: 0,
     fillOpacity: 0
 };
 
-const hoverStateBorder = {
+const stateHasVolunteersStyle = {
+    opacity: 1,
+    fillOpacity: 0.7,
+    color: "#0080FF",
+    fillColor: "#0080FF",
+    weight: 2
+
+}
+
+const hoverStateStyle = {
     opacity: 1,
     dashArray: '',
     color: "#cccccc",
     weight: 2
 };
 
-const selectedStateBorder = {
+const selectedStateStyle = {
     opacity: 1,
+    fillOpacity: 0.5,
     dashArray: '=',
-    color: "#dfdfdf",
+    color: "#1431AF",
+    fillColor: "#0080FF",
     weight: 5,
 };
 
@@ -60,6 +71,8 @@ const peopleData = [
 function InitializeMap() {
     map = L.map('map-section__map').setView(defaultLocation, 4);
 
+    map.createPane("locationMarkers");
+    map.getPane("locationMarkers").style.zIndex = 999;
 
     // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     //     maxZoom: 19,
@@ -82,8 +95,6 @@ function InitializeMap() {
     //     maxZoom: 19,
     //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
     // }).addTo(map);
-
-    
 
     ShowPeople();
     ShowStates();
@@ -144,7 +155,17 @@ function ShowPeople() {
         //     zIndex: 999
         // }).addTo(map);
 
-        var marker = L.marker([person.lat, person.lng], {
+        // var marker = L.marker([person.lat, person.lng], {
+        // });
+
+        var marker = L.circleMarker([person.lat, person.lng], {
+            radius: 4,
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 1,
+            pane: "locationMarkers",
+            color: "#FFFFFF",
+            fillColor: "#FFFFFF",
         });
 
         marker.person = person;
@@ -160,17 +181,19 @@ function getMarkerFromPerson(person) {
 }
 
 
+function getDefaultStateStyle(stateData) {
+    if(stateData.volunteers !== undefined) {
+        return stateHasVolunteersStyle;
+    } else {
+        return defaultStateStyle;
+    }
+}
+
 /**
  * Makes all states clickable.
  */
 function ShowStates() {
-    const style = {
-        fillColor: "red",
-        opacity: 0,
-        fillOpacity: 0
-    };
-
-    stateLayers = L.geoJson(statesData, {style: style, onEachFeature: onEachFeature}).addTo(map);
+    stateLayers = L.geoJson(statesData, {onEachFeature: onEachFeature}).addTo(map);
 
     function onEachFeature(feature, layer) {
         layer.on({
@@ -178,6 +201,8 @@ function ShowStates() {
             mouseout: onStateMouseOut,
             click: onStateClick
         });
+
+        layer.setStyle(getDefaultStateStyle(feature.properties));
     }
 }
 
@@ -203,8 +228,7 @@ function onStateClick(e) {
     selectMapTab(1);
     SelectLayer(layer);
     updateStateInfoWindow(layer.feature.properties);
-    showStateInfoWindow();
-    
+    showStateInfoWindow();   
 }
 
 function onStateListButtonPress(e) {
@@ -220,7 +244,7 @@ function onStateMouseOver(e) {
     const layer = e.target;
 
     if(layer !== selectedLayer) {
-        layer.setStyle(hoverStateBorder);
+        layer.setStyle(hoverStateStyle);
     }
 }
 
@@ -228,7 +252,7 @@ function onStateMouseOut(e) {
     const layer = e.target;
 
     if(layer !== selectedLayer) {
-        layer.setStyle(defaultStateBorder);
+        layer.setStyle(getDefaultStateStyle(layer.feature.properties));
     }
 }
 
@@ -343,14 +367,14 @@ function SelectLayer(layer) {
         DeSelectLayer(selectedLayer);
     }
 
-    layer.setStyle(selectedStateBorder);
+    layer.setStyle(selectedStateStyle);
     map.fitBounds(layer.getBounds());
     selectedLayer = layer;
 }
 
 function DeSelectLayer(layer) {
     if(layer) {
-        layer.setStyle(defaultStateBorder);
+        layer.setStyle(getDefaultStateStyle(layer.feature.properties));
         selectedLayer = false;
     }
 }
