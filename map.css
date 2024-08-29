@@ -243,6 +243,11 @@ ul#info-panel-person__people button:after {
     top: -50px;
     left: 50%;
     transform: translateX(-50%);
+    display: none;
+}
+
+.map-section__info-panel-person--has-image .map-section__info-panel-person-photo {
+    display: block;
 }
 
 .map-section__info-panel-person--data h3 {
