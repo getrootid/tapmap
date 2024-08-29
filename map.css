@@ -180,3 +180,89 @@ ul#info-panel-state__states button:after {
 .map-section__info-panel-person[aria-hidden=true] {
     display: none;
 }
+
+/* Student Profiles tab */
+
+ul#info-panel-person__people {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+ul#info-panel-person__people button {
+    background: transparent;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    font-size: 0.9rem;
+    line-height: 2.75em;
+    align-items: center;
+    border: 0;
+}
+
+ul#info-panel-person__people button:before {
+    content: "";
+    display: block;
+    width: 18px;
+    height: 24px;
+    margin-right: 2rem;
+    background-image: url(./images/marker.svg);
+}
+
+ul#info-panel-person__people button:after {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 17.23px;
+    margin-left: auto;
+    background-image: url(./images/arrow.svg);
+}
+
+/* Individual Profile */
+
+.map-section__info-panel-person--data {
+    background: white;
+    color: black;
+    position: relative;
+    padding: 20px 10px;
+}
+
+.map-section__info-panel-person--has-image {
+    padding-top: 56px;
+    margin-top: 41px;
+}
+
+.map-section__info-panel-person-photo {
+    border-radius: 50%;
+    width: 112px;
+    height: 112px;
+    margin: 0 auto;
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.map-section__info-panel-person--data h3 {
+    text-align: center;
+}
+
+#info-panel-student__employer,
+#info-panel-student__school {
+    font-size: 1rem;
+    line-height: 1.1rem;
+    text-align: center;
+}
+
+/* Hide field labels  */
+.map-section__info-panel-field-label {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}

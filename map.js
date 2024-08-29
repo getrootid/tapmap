@@ -51,7 +51,7 @@ const peopleData = [
     {
         "name": "Jason Neumark Mickela",
         "image": "https://media.licdn.com/dms/image/v2/D5603AQFu3HgMXPPjCw/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1719858694235?e=1729728000&v=beta&t=haPs9E9UJsovBZB0Xgh4J6cVB2YeWJVZN7OEw_wAw7M",
-        "law_school": "San Franciso State University",
+        "lawSchool": "San Franciso State University",
         "employer": "rootid",
         "lat": 37.904200,
         "lng": -122.294460
@@ -59,7 +59,7 @@ const peopleData = [
     {
         "name": "Rosalee Mickela",
         "image": "",
-        "law_school": "Harding Elementary",
+        "lawSchool": "Harding Elementary",
         "employer": "Jason Neumark Mickela",
         "lat": 38.904200,
         "lng": -121.294460
@@ -159,7 +159,7 @@ function ShowPeople() {
         // });
 
         var marker = L.circleMarker([person.lat, person.lng], {
-            radius: 4,
+            radius: 5,
             weight: 1,
             opacity: 1,
             fillOpacity: 1,
@@ -294,23 +294,24 @@ function updateStateInfoWindow(stateData) {
 
 function updatePersonInfoWindow(personData) {
     const elName = document.getElementById('info-panel-person__name');
-    // const elStudentCount = document.getElementById('info-panel-state__num-students');
-    // const elLawSchoolsWrapper = document.getElementById('info-panel-state__law-schools');
-
-    // console.log(stateData);
+    const elImage = document.getElementById('info-panel-person__photo');
+    const elEmployer = document.getElementById('info-panel-student__employer');
+    const elLawSchool = document.getElementById('info-panel-student__school');
+    const elWrapper = elName.parentElement;
 
     elName.innerHTML = personData.name;
-    // elStudentCount.innerHTML = stateData.studentCount;
+    elEmployer.innerHTML = personData.employer;
+    elLawSchool.innerHTML = personData.lawSchool;
+    
 
-    // elLawSchoolsWrapper.replaceChildren();
-
-    // if(stateData.lawSchools) {
-    //     stateData.lawSchools.forEach(school => {
-    //         const li = document.createElement('li');
-    //         li.appendChild(document.createTextNode(school));
-    //         elLawSchoolsWrapper.appendChild(li);
-    //     });
-    // }
+    if(personData.image) {
+        elImage.setAttribute('src', personData.image);
+        // Add class to parent when the image is there
+        elWrapper.classList.add('map-section__info-panel-person--has-image');
+    } else {
+        elImage.setAttribute('src', '');
+        elWrapper.classList.remove('map-section__info-panel-person--has-image');
+    }
 }
 
 function showStateInfoWindow() {
@@ -423,7 +424,7 @@ function onPersonListButtonPress(e) {
 
     // Zoom in on this person's marker.
     const marker = getMarkerFromPerson(person);
-    map.setView(marker.getLatLng(), 10);
+    map.setView(marker.getLatLng(), 6);
 
     SelectPerson(person);
 }
