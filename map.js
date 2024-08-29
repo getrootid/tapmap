@@ -15,15 +15,16 @@ const stateHasVolunteersStyle = {
     opacity: 1,
     fillOpacity: 0.7,
     color: "#0080FF",
-    fillColor: "#0080FF",
+    fillColor: "#00800F",
     weight: 2
 
 }
 
 const hoverStateStyle = {
     opacity: 1,
+    fillOpacity: 1,
     dashArray: '',
-    color: "#cccccc",
+    color: "#FFFFFF",
     weight: 2
 };
 
