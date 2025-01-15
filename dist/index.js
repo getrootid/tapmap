@@ -55,6 +55,13 @@ function InitializeMap() {
     attribution: '&copy; ESRI'
   }).addTo(map);
 
+  // L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.{ext}', {
+  //   minZoom: 0,
+  //   maxZoom: 20,
+  //   attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  //   ext: 'png'
+  // }).addTo(map);
+
   // Free, too dark. No lines between states.
   // L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
   //     maxZoom: 19,
@@ -131,6 +138,8 @@ function PopulateStatesList() {
       elStateList.appendChild(li);
     }
   });
+
+  ShowStates();
 }
 
 function populatePeopleList() {
@@ -154,8 +163,8 @@ function populatePeopleList() {
 function ShowPeople() {
 
   // Get the data from the alumni csv file at: https://docs.google.com/spreadsheets/d/e/2PACX-1vSNds5T_0uWILX-HwgrmBtH_I5gB1lDNOl3PfE0nMxrsWA-47RxXKEafvV91e1raSXhxKTXq9209Vx1/pub?gid=0&single=true&output=csv
-
   const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSNds5T_0uWILX-HwgrmBtH_I5gB1lDNOl3PfE0nMxrsWA-47RxXKEafvV91e1raSXhxKTXq9209Vx1/pub?gid=0&single=true&output=csv";
+
   // get the data
   Papa.parse(csvUrl, {
     download: true,
@@ -166,22 +175,26 @@ function ShowPeople() {
       peopleData = results.data;
 
       peopleData.forEach(person => {
-        var marker = L.circleMarker([person.lat, person.lng], {
-          radius: 4.5,
-          weight: 1,
-          opacity: 1,
-          fillOpacity: 1,
-          pane: "locationMarkers",
-          color: "#FFFFFF",
-          fillColor: "#8A0B0B",
-        });
+        // If person.lat and person.lng is empty, and person.address isn't, geocode the address.
+        if(person.lat === "" && person.lng === "" && person.address !== "") {
+          // Geocode the address.
+          const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${person.address}`;
+          fetch(geocodeUrl)
+            .catch(error => console.error('Error:', error))
+            .then(response => response.json())
+            .then(data => {
 
-        marker.person = person;
-        marker.on('click', onPersonMarkerClick);
-        person.marker = marker;
+              if(data.length > 0) {
+                person.lat = data[0].lat;
+                person.lng = data[0].lon;
 
-        marker.addTo(map);
-
+                addPersonToMap(person);
+              }
+            });
+        } else {
+          addPersonToMap(person);
+        }
+        
         // If the person has a setting for group, make sure it's in the group list.
         if(person.group !== undefined && !alumniGroupTitles.includes(person.group)) {
           alumniGroupTitles.push(person.group);
@@ -205,8 +218,6 @@ function ShowPeople() {
 
             return 0;
           });
-
-          console.log(alumniGroups);
         }
       });
     }
@@ -214,6 +225,24 @@ function ShowPeople() {
 
 
 
+}
+
+function addPersonToMap(person) {
+  var marker = L.circleMarker([person.lat, person.lng], {
+    radius: 4.5,
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 1,
+    pane: "locationMarkers",
+    color: "#FFFFFF",
+    fillColor: "#8A0B0B",
+  });
+
+  marker.person = person;
+  marker.on('click', onPersonMarkerClick);
+  person.marker = marker;
+
+  marker.addTo(map);
 }
 
 function getMarkerFromPerson(person) {
