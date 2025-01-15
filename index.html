@@ -11,7 +11,7 @@
   
   <link rel="stylesheet" href="https://use.typekit.net/wbv2tcx.css">
   <link rel="stylesheet" href="map.css">
-  <script src="states.js"></script>
+  <script src="dist/states.js"></script>
 </head>
 
 <body>
@@ -21,76 +21,112 @@
         <div id="map-section__map" class="map-section__map"></div>
     </div>
 
-    <div class="map-section__info-panel">
-        <div class="map-section__info-panel-header">
-            <nav class="map-section__tabs-wrapper">
-                <ul class="map-section__tabs" role="tablist">
-                    <li class="map-section__tab map-section__tab--selected"><button class="map-section__tab-button" id="tab-button-0" aria-controls="info-panel-body-0" role="tab" aria-selected="true">United States</button></li>
-                    <li class="map-section__tab map-section__tab"><button class="map-section__tab-button" id="tab-button-1" aria-controls="info-panel-body-1" role="tab" aria-selected="false">State</button></li>
-                    <li class="map-section__tab map-section__tab"><button class="map-section__tab-button" id="tab-button-2" aria-controls="info-panel-body-2" role="tab" aria-selected="false">Student Profiles</button></li>
-                </ul>
-            </nav>
-        </div>
+    <div class="map-section__info-panel__wrapper">
+        <div class="map-section__info-panel">
+            <div class="map-section__info-panel-header">
+                <nav class="map-section__tabs-wrapper">
+                    <ul class="map-section__tabs" role="tablist">
+                        <li class="map-section__tab map-section__tab--selected"><button class="map-section__tab-button" id="tab-button-0" aria-controls="info-panel-body-0" role="tab" aria-selected="true">United States</button></li>
+                        <li class="map-section__tab map-section__tab"><button class="map-section__tab-button" id="tab-button-1" aria-controls="info-panel-body-1" role="tab" aria-selected="false">State</button></li>
+                        <li class="map-section__tab map-section__tab"><button class="map-section__tab-button" id="tab-button-2" aria-controls="info-panel-body-2" role="tab" aria-selected="false">Alumni Profiles</button></li>
+                    </ul>
+                </nav>
+            </div>
 
-        <div id="info-panel-body-0" class="map-section__info-panel-body map-section__info-panel-body--us" aria-hidden="false">
-            <h3>A Title of this Map Can Go Here</h3>
-            <p>Static information - intro to this map, how to use, etc. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-Does this need a call to action of any sort?
-            </p>
+            <div id="info-panel-body-0" class="map-section__info-panel-body map-section__info-panel-body--us" aria-hidden="false">
+                <h3>Meet The Appellate<br />
+                    Project Community</h3>
+
+                <p>
+                    Our mission is to ensure our highest courts reflect our communities. That’s why we are empowering the next generation of appellate lawyers and judges.
+                    <br /><br />
+                    Many law students of color, particularly those who are first generation, lack the networks and resources of their law school peers. As a result, these students may miss out on an appellate career simply because they do not know how to pursue it. Others self-select out, discouraged by the absence of appellate attorneys and judges who share their backgrounds.
+                    <br /><br />
+                    <strong>Our goal is to change that.</strong><br />
+                    <br />
+                    Our Mentorship Program is the first and only national effort focused on empowering law students of color to pursue appellate work. We pair law students interested in appellate practice with two mentors in the appellate field, ranging from attorneys, judges, professors, and law clerks. We also provide students with innovative and impactful appellate-focused resources, including <strong>clerkship support, skillbuilding opportunities, networking,</strong> and <strong>community building.</strong>
+                    <br /><br />
+                    Since launching in September 2020, we are proud to have provided innovative appellate resources to <strong>619 law students</strong> through our Mentorship Program, representing <strong>108 law schools nationwide.</strong> Our incredible network of <strong>thousands of volunteers</strong>—appellate leaders from all over the country—tirelessly support     our students and the work we do. Explore our interactive map to meet a few of the amazing members that make up the TAP community.
+                </p>
 
 
-        </div>
-        <div id="info-panel-body-1" class="map-section__info-panel-body" aria-hidden="true">
-            <div class="map-section__info-panel-state map-section__info-panel-state--state-data" aria-hidden="true">
-                <h3 id="info-panel-state__title"></h3>
-                <div class="map-section__info-panel-field map-section__info-panel-field--num-students">
-                    <div class="map-section__info-panel-field-label">Number of Students</div>
-                    <div id="info-panel-state__num-students"></div>    
+            </div>
+            <div id="info-panel-body-1" class="map-section__info-panel-body" aria-hidden="true">
+                <div class="map-section__info-panel-state map-section__info-panel-state--state-data" aria-hidden="true">
+                    <div class="map-section__info-panel__state-header">
+                        <h3 id="info-panel-state__title"></h3>
+                        <button id="info-panel-state__back" class="map-section__info-panel-state__back">Back to list</button>
+                    </div>
+
+                    <div class="map-section__info-panel-state__counts">
+                        <div class="map-section__info-panel-field map-section__info-panel-field--num-students">
+                            <div class="map-section__info-panel__icon map-section__info-panel__icon--students">
+                                <img src="../images/students.svg" alt="">
+                            </div>
+
+                            <div id="info-panel-state__num-students" class="info-panel-state__count"></div>
+                            <div class="map-section__info-panel-state_count-label">Students</div>
+                        </div>
+                        <div class="map-section__info-panel-field map-section__info-panel-field--law-schools">
+                            <div class="map-section__info-panel__icon map-section__info-panel__icon--schools">
+                                <img src="../images/schools.svg" alt="">
+                            </div>
+                            <div id="info-panel-state__num-schools" class="info-panel-state__count"></div>
+                            <div class="map-section__info-panel-state_count-label">Schools</div>
+                        </div>
+                        <div class="map-section__info-panel-field map-section__info-panel-field--volunteers">
+                            <div class="map-section__info-panel__icon map-section__info-panel__icon--volunteers">
+                                <img src="../images/volunteers.svg" alt="">
+                            </div>
+                            <div id="info-panel-state__num-volunteers" class="info-panel-state__count"></div>
+                            <div class="map-section__info-panel-state_count-label">Volunteers</div>
+                        </div>
+                    </div>
+
+                    <div id="map-section__info-panel-state__text" class="map-section__info-panel-state--text"></div>
+
                 </div>
-                <div class="map-section__info-panel-field map-section__info-panel-field--law-schools">
-                    <div class="map-section__info-panel-field-label">Law Schools</div>
-                    <ul id="info-panel-state__law-schools"></ul>    
-                </div>
-                <div class="map-section__info-panel-field map-section__info-panel-field--volunteers">
-                    <div class="map-section__info-panel-field-label">Volunteers</div>
-                    <div id="info-panel-state__volunteers">???</div>    
+                <div class="map-section__info-panel-state map-section__info-panel-state--state-list" aria-hidden="true">
+                    <div class="map-section__info-panel-field map-section__info-panel-field--state-list">
+                        <div class="map-section__info-panel-field-label">Select a State/Territory</div>
+                        <ul id="info-panel-state__states"></ul>
+                    </div>
                 </div>
             </div>
-            <div class="map-section__info-panel-state map-section__info-panel-state--state-list" aria-hidden="true">
-                <div class="map-section__info-panel-field map-section__info-panel-field--state-list">
-                    <div class="map-section__info-panel-field-label">Select a State/Territory</div>
-                    <ul id="info-panel-state__states"></ul>    
-                </div>
-            </div>
-        </div>
-        <div id="info-panel-body-2" class="map-section__info-panel-body" aria-hidden="true">
-            <div class="map-section__info-panel-person map-section__info-panel-person--data" aria-hidden="true">
-                <img id="info-panel-person__photo" class="map-section__info-panel-person-photo" src="" alt="">
+            <div id="info-panel-body-2" class="map-section__info-panel-body" aria-hidden="true">
+                <div class="map-section__info-panel-person map-section__info-panel-person--data" aria-hidden="true">
+                    <img id="info-panel-person__photo" class="map-section__info-panel-person-photo" src="" alt="">
 
-                <h3 id="info-panel-person__name"></h3>
-                <div class="map-section__info-panel-field map-section__info-panel-field--student-school">
-                    <div class="map-section__info-panel-field-label">School</div>
-                    <div id="info-panel-student__school"></div>    
+                    <h3 id="info-panel-person__name"></h3>
+                    <div class="map-section__info-panel-field map-section__info-panel-field--student-school">
+                        <div class="map-section__info-panel-field-label">School</div>
+                        <div id="info-panel-student__school"></div>
+                    </div>
+                    <!-- <div class="map-section__info-panel-field map-section__info-panel-field--student-year">
+                        <div class="map-section__info-panel-field-label">Year</div>
+                        <div id="info-panel-student__year"></div>
+                    </div> -->
+                    <div class="map-section__info-panel-field map-section__info-panel-field--student-mentor">
+                        <div class="map-section__info-panel-field-label">Employer</div>
+                        <div id="info-panel-student__employer"></div>
+                    </div>
                 </div>
-                <!-- <div class="map-section__info-panel-field map-section__info-panel-field--student-year">
-                    <div class="map-section__info-panel-field-label">Year</div>
-                    <div id="info-panel-student__year"></div>    
-                </div> -->
-                <div class="map-section__info-panel-field map-section__info-panel-field--student-mentor">
-                    <div class="map-section__info-panel-field-label">Employer</div>
-                    <div id="info-panel-student__employer"></div>    
-                </div>
-            </div>
-            <div class="map-section__info-panel-person map-section__info-panel-person--list" aria-hidden="true">
-                <div class="map-section__info-panel-field map-section__info-panel-field--student-list">
-                    <div class="map-section__info-panel-field-label">Select a Student</div>
-                    <ul id="info-panel-person__people"></ul>    
+                <div class="map-section__info-panel-person map-section__info-panel-person--list" aria-hidden="true">
+                    <div class="map-section__info-panel-header map-section__info-panel-header--student-list">
+                        <p>We are proud to see many of our alumni already bringing their voices to our highest courts, including working in federal appellate courts, state supreme courts, major appellate law firms, and appellate public defender agencies. View the profiles below to see where a few of our alumni are now.</p>
+                    </div>
+                    <div class="map-section__info-panel-field map-section__info-panel-field--student-list">
+                        <div class="map-section__info-panel-field-label">Select am alumni group</div>
+                        <select id="info-panel-student__group-select"></select>
+                        <ul id="info-panel-person__people"></ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<script src="map.js"></script>
+<script src="dist/papaparse.min.js"></script>
+<script src="dist/index.js"></script>
 </body>
 </html>

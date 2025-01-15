@@ -1,0 +1,4 @@
+name: tap-map
+recipe: lamp
+config:
+  webroot: .

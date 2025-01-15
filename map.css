@@ -37,7 +37,7 @@ button {
 }
 
 .map-section__map-wrapper {
-    flex: 0 0 55%;
+    flex: 1 1 auto;
     height: 100%;
 }
 
@@ -47,22 +47,34 @@ button {
 }
 
 
-.map-section__info-panel {
+.map-section__info-panel__wrapper {
+    flex: 0 0 25rem;
+
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 2rem 1.5rem;
     max-height: 100%;
     height: 100%;
     box-sizing: border-box;
+    padding: 23px 24px 0 8px;
+    background: #3F3F41;
 
     overflow-y: auto;
+}
+
+.map-section__info-panel {
+    background-color: var(--color--dark-blue);
+}
+
+.map-section__info-panel-header {
+    padding: 2rem 1.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 /* Top Level Tabs */
 
 .map-section__tabs-wrapper {
-    margin-bottom: 3rem;
+    margin-bottom: 0.8rem;
 }
 
 .map-section__tabs {
@@ -110,9 +122,9 @@ button {
 
 
 .map-section__info-panel-body h3 {
-    font-size: 1.5rem;
-    line-height: 2rem;
-    font-weight: normal;
+    font-size: 1.875rem;
+    line-height: 1.2;
+    font-weight: 400;
 }
 
 .map-section__info-panel-body--us {
@@ -128,6 +140,42 @@ button {
 
 /*  Specific to the state pane */
 
+.map-section__info-panel__state-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 2.1rem;
+}
+
+.map-section__info-panel-state__back {
+    margin-left: auto;
+    height: 1.65rem;
+    border: 0;
+    font-size: 0.75rem;
+    padding: 3.5px 12px;
+
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    background: #0080FF;
+    border-radius: 318px;
+    color: white;
+}
+
+h3#info-panel-state__title {
+    font-size: 1.9rem;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.map-section__info-panel-state__back:before {
+    content: "";
+    display: block;
+    width: 8.84px;
+    height: 7.62px;
+    margin-right: 3px;
+    background-image: url(./images/white-left-arrow.svg);
+}
 
 .map-section__info-panel-field-label {
     font-size: 0.9rem;
@@ -148,7 +196,7 @@ ul#info-panel-state__states button {
     display: flex;
     flex-direction: row;
     width: 100%;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     line-height: 2.75em;
     align-items: center;
     border: 0;
@@ -172,6 +220,44 @@ ul#info-panel-state__states button:after {
     background-image: url(./images/arrow.svg);
 }
 
+.map-section__info-panel-state {
+    padding: 35px 23px 23px 23px;
+}
+
+.map-section__info-panel-state__counts {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.map-section__info-panel-state__counts .map-section__info-panel-field {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.map-section__info-panel__icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.info-panel-state__count {
+    font-size: 1.2rem;
+}
+
+.map-section__info-panel-state_count-label {
+    font-size: 1rem;
+    line-height: 1.1;
+}
+
+
 
 .map-section__info-panel-state[aria-hidden=true] {
     display: none;
@@ -180,6 +266,13 @@ ul#info-panel-state__states button:after {
 .map-section__info-panel-person[aria-hidden=true] {
     display: none;
 }
+
+
+
+
+
+
+
 
 /* Student Profiles tab */
 

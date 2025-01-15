@@ -1,10 +1,12 @@
 'use strict';
 
+
 var map;
 var stateLayers = null;
 var selectedLayer = null;
 var selectedPerson = null;
 var defaultLocation = [38.505, -100.09];
+
 
 const defaultStateStyle = {
     opacity: 0,
@@ -109,6 +111,10 @@ function InitializeMap() {
  * This should be called after the map is initialized.
  */
 function PopulateStatesList() {
+
+
+
+
     const elStateList = document.getElementById('info-panel-state__states');
 
     statesData.features.forEach(state => {
