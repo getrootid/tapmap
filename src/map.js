@@ -24,8 +24,10 @@ const stateHasVolunteersStyle = {
 
 const hoverStateStyle = {
     opacity: 1,
+    fillOpacity: 1,
     dashArray: '',
     color: "#cccccc",
+    fillColor: "#0080FF",
     weight: 2
 };
 
