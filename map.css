@@ -46,9 +46,12 @@ button {
     height: 100%;
 }
 
+.map-section__info-panel {
+    background-color: var(--color--dark-blue);
+}
 
 .map-section__info-panel__wrapper {
-    flex: 0 0 25rem;
+    flex: 0 0 27rem;
 
     display: flex;
     flex-direction: column;
@@ -62,12 +65,86 @@ button {
     overflow-y: auto;
 }
 
-.map-section__info-panel {
-    background-color: var(--color--dark-blue);
+
+
+.map-section__info-panel-wrapper--hidden {
+    display: inline-flex;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.8rem;
+
+    width: 18rem;
+    height: 3rem;
+
+    padding: 0;
+
+
+    z-index: 100000;
 }
 
+.map-section__info-panel-wrapper--hidden .map-section__info-panel-body,
+.map-section__info-panel-wrapper--hidden .map-section__info-panel-header {
+    display: none;
+}
+
+.map-section__info-panel__pre-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+    margin-left: auto;
+
+    /* Same as above! */
+    width: 18rem;
+    height: 3rem;
+}
+
+.map-section__info-panel-wrapper--hidden .map-section__info-panel__pre-header {
+    justify-content: center;
+}
+
+.map-section__info-panel__pre-header__title {
+    color: white;
+    border-right: 1px solid rgba(255,255,255,0.6);
+    font-size: 0.75rem;
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+
+    display: none;
+}
+.map-section__info-panel-wrapper--hidden .map-section__info-panel__pre-header__title {
+    display: block;
+}
+
+#map-section__info-panel-header__show-panel,
+#map-section__info-panel-header__hide-panel {
+    background: none;
+    border: 0;
+    color: white;
+    cursor: pointer;
+    font-size: 0.7rem;
+    white-space: nowrap;
+}
+
+#map-section__info-panel-header__hide-panel img {
+    rotate: 180deg;
+}
+
+#map-section__info-panel-header__show-panel {
+    display: none;
+}
+
+.map-section__info-panel-wrapper--hidden #map-section__info-panel-header__show-panel {
+    display: block;
+}
+
+.map-section__info-panel-wrapper--hidden #map-section__info-panel-header__hide-panel {
+    display: none;
+}
+
+
 .map-section__info-panel-header {
-    padding: 2rem 1.5rem 0;
+    padding: 0.2rem 1.5rem 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
@@ -315,7 +392,32 @@ ul#info-panel-person__people button:after {
 
 /* Individual Profile */
 
+#map-section__info-panel-person__back {
+    width: 7.5rem;
+    font-size: 0.8rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    background: #0080FF;
+    border-radius: 360px;
+    color: white;
+    border: 1px solid #0080FF;
+    margin: 3.2rem 3.5rem 1.6rem auto;
+    cursor: pointer;
+}
+
+#map-section__info-panel-person__back:hover {
+    background: transparent;
+    color: #0080FF;
+}
+
 .map-section__info-panel-person--data {
+    display: flex;
+    flex-direction: column;
+}
+
+.map-section__info-panel-person__header {
     background: white;
     color: black;
     position: relative;

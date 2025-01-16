@@ -21,8 +21,15 @@
         <div id="map-section__map" class="map-section__map"></div>
     </div>
 
-    <div class="map-section__info-panel__wrapper">
+    <div id="map-section__info-panel-wrapper" class="map-section__info-panel__wrapper">
         <div class="map-section__info-panel">
+
+            <div class="map-section__info-panel__pre-header">
+                <h2 class="map-section__info-panel__pre-header__title">The Appellate Project Map</h2>
+                <button id="map-section__info-panel-header__hide-panel">hide details <img src="images/white-left-arrow.svg"></button>
+                <button id="map-section__info-panel-header__show-panel"><img src="images/white-left-arrow.svg"> show details</button>
+            </div>
+
             <div class="map-section__info-panel-header">
                 <nav class="map-section__tabs-wrapper">
                     <ul class="map-section__tabs" role="tablist">
@@ -61,7 +68,7 @@
                     <div class="map-section__info-panel-state__counts">
                         <div class="map-section__info-panel-field map-section__info-panel-field--num-students">
                             <div class="map-section__info-panel__icon map-section__info-panel__icon--students">
-                                <img src="../images/students.svg" alt="">
+                                <img src="images/students.svg" alt="">
                             </div>
 
                             <div id="info-panel-state__num-students" class="info-panel-state__count"></div>
@@ -69,14 +76,14 @@
                         </div>
                         <div class="map-section__info-panel-field map-section__info-panel-field--law-schools">
                             <div class="map-section__info-panel__icon map-section__info-panel__icon--schools">
-                                <img src="../images/schools.svg" alt="">
+                                <img src="images/schools.svg" alt="">
                             </div>
                             <div id="info-panel-state__num-schools" class="info-panel-state__count"></div>
                             <div class="map-section__info-panel-state_count-label">Schools</div>
                         </div>
                         <div class="map-section__info-panel-field map-section__info-panel-field--volunteers">
                             <div class="map-section__info-panel__icon map-section__info-panel__icon--volunteers">
-                                <img src="../images/volunteers.svg" alt="">
+                                <img src="images/volunteers.svg" alt="">
                             </div>
                             <div id="info-panel-state__num-volunteers" class="info-panel-state__count"></div>
                             <div class="map-section__info-panel-state_count-label">Volunteers</div>
@@ -94,21 +101,27 @@
                 </div>
             </div>
             <div id="info-panel-body-2" class="map-section__info-panel-body" aria-hidden="true">
-                <div class="map-section__info-panel-person map-section__info-panel-person--data" aria-hidden="true">
-                    <img id="info-panel-person__photo" class="map-section__info-panel-person-photo" src="" alt="">
 
-                    <h3 id="info-panel-person__name"></h3>
-                    <div class="map-section__info-panel-field map-section__info-panel-field--student-school">
-                        <div class="map-section__info-panel-field-label">School</div>
-                        <div id="info-panel-student__school"></div>
-                    </div>
-                    <!-- <div class="map-section__info-panel-field map-section__info-panel-field--student-year">
-                        <div class="map-section__info-panel-field-label">Year</div>
-                        <div id="info-panel-student__year"></div>
-                    </div> -->
-                    <div class="map-section__info-panel-field map-section__info-panel-field--student-mentor">
-                        <div class="map-section__info-panel-field-label">Employer</div>
-                        <div id="info-panel-student__employer"></div>
+                <div class="map-section__info-panel-person map-section__info-panel-person--data" aria-hidden="true">
+                    <button id="map-section__info-panel-person__back"><img src="images/white-left-arrow.svg" alt=""> Back to list</button>
+
+                    <div class="map-section__info-panel-person__header">
+
+                        <img id="info-panel-person__photo" class="map-section__info-panel-person-photo" src="" alt="">
+
+                        <h3 id="info-panel-person__name"></h3>
+                        <div class="map-section__info-panel-field map-section__info-panel-field--student-school">
+                            <div class="map-section__info-panel-field-label">School</div>
+                            <div id="info-panel-student__school"></div>
+                        </div>
+                        <!-- <div class="map-section__info-panel-field map-section__info-panel-field--student-year">
+                            <div class="map-section__info-panel-field-label">Year</div>
+                            <div id="info-panel-student__year"></div>
+                        </div> -->
+                        <div class="map-section__info-panel-field map-section__info-panel-field--student-mentor">
+                            <div class="map-section__info-panel-field-label">Employer</div>
+                            <div id="info-panel-student__employer"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="map-section__info-panel-person map-section__info-panel-person--list" aria-hidden="true">

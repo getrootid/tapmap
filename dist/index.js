@@ -9,6 +9,11 @@ let peopleData = [];
 let alumniGroupTitles = [];
 let alumniGroups = [];
 
+const hidePanelButton = document.getElementById('map-section__info-panel-header__hide-panel');
+const showPanelButton = document.getElementById('map-section__info-panel-header__show-panel');
+hidePanelButton.onclick = togglePanelClick;
+showPanelButton.onclick = togglePanelClick;
+
 const defaultStateStyle = {
   opacity: 0,
   fillOpacity: 0
@@ -39,8 +44,20 @@ const selectedStateStyle = {
   weight: 5,
 };
 
+function togglePanelClick(e) {
+  const panel = document.getElementById('map-section__info-panel');
+  const panelWrapper = document.getElementById('map-section__info-panel-wrapper');
+
+  if(panelWrapper.classList.contains('map-section__info-panel-wrapper--hidden')) {
+    panelWrapper.classList.remove('map-section__info-panel-wrapper--hidden');
+  } else {
+    panelWrapper.classList.add('map-section__info-panel-wrapper--hidden');
+  }
+}
+
 function InitializeMap() {
-  map = L.map('map-section__map').setView(defaultLocation, 4);
+  const mapDiv = document.getElementById("map-section__map");
+  map = L.map(mapDiv).setView(defaultLocation, 4);
 
   map.createPane("locationMarkers");
   map.getPane("locationMarkers").style.zIndex = 999;
@@ -50,29 +67,23 @@ function InitializeMap() {
   //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   // }).addTo(map);
 
-  L.tileLayer('http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-    maxZoom: 19,
-    attribution: '&copy; ESRI'
+  // L.tileLayer('http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+  //   maxZoom: 19,
+  //   attribution: '&copy; ESRI'
+  // }).addTo(map);
+
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+    maxZoom: 16
   }).addTo(map);
 
-  // L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.{ext}', {
-  //   minZoom: 0,
-  //   maxZoom: 20,
-  //   attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  //   ext: 'png'
-  // }).addTo(map);
+  const resizeObserver = new ResizeObserver(() => {
+    map.invalidateSize();
+  });
 
-  // Free, too dark. No lines between states.
-  // L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
-  //     maxZoom: 19,
-  //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-  // }).addTo(map);
+  resizeObserver.observe(mapDiv);
 
-  // Free? Need an account.
-  // L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
-  //     maxZoom: 19,
-  //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-  // }).addTo(map);
+
 
   ShowPeople();
   ShowStates();
@@ -97,8 +108,6 @@ function PopulateStatesList() {
     download: true,
     header: true,
     complete: function(results) {
-      console.log(results);
-
       const newStateData = results.data;
 
       newStateData.forEach(state => {
@@ -117,9 +126,10 @@ function PopulateStatesList() {
 
           stateFeature.properties.textContent = state.text;
         }
-
-
       });
+
+      // Run after all the data is loaded:
+      ShowStates();
     }});
 
 
@@ -138,8 +148,6 @@ function PopulateStatesList() {
       elStateList.appendChild(li);
     }
   });
-
-  ShowStates();
 }
 
 function populatePeopleList() {
@@ -194,7 +202,7 @@ function ShowPeople() {
         } else {
           addPersonToMap(person);
         }
-        
+
         // If the person has a setting for group, make sure it's in the group list.
         if(person.group !== undefined && !alumniGroupTitles.includes(person.group)) {
           alumniGroupTitles.push(person.group);
@@ -562,9 +570,14 @@ function onPersonListButtonPress(e) {
   // Zoom in on this person's marker.
   const marker = getMarkerFromPerson(person);
   map.setView(marker.getLatLng(), 6);
-
   SelectPerson(person);
 }
+
+function onPersonBackToListButtonPress() {
+  selectedPerson = null;
+  showPersonInfoWindow();
+}
+document.getElementById('map-section__info-panel-person__back').onclick = onPersonBackToListButtonPress;
 
 function onTabButtonClick(e) {
   const button = e.target;
