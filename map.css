@@ -47,11 +47,13 @@ button {
 }
 
 .map-section__info-panel {
+    flex: 1 1 auto;
     background-color: var(--color--dark-blue);
 }
 
 .map-section__info-panel__wrapper {
     flex: 0 0 27rem;
+
 
     display: flex;
     flex-direction: column;
@@ -353,6 +355,14 @@ ul#info-panel-state__states button:after {
 
 /* Student Profiles tab */
 
+.map-section__info-panel-person {
+    padding: 0.2rem 1.5rem 0;
+}
+
+.map-section__info-panel-sub-header {
+    margin-bottom: 2rem;
+}
+
 ul#info-panel-person__people {
     margin: 0;
     padding: 0;
@@ -372,25 +382,42 @@ ul#info-panel-person__people button {
     border: 0;
 }
 
-ul#info-panel-person__people button:before {
-    content: "";
-    display: block;
-    width: 18px;
-    height: 24px;
-    margin-right: 2rem;
-    background-image: url(./images/marker.svg);
-}
+/*ul#info-panel-person__people button:before {*/
+/*    content: "";*/
+/*    display: block;*/
+/*    width: 18px;*/
+/*    height: 24px;*/
+/*    margin-right: 2rem;*/
+/*    background-image: url(./images/marker.svg);*/
+/*}*/
 
-ul#info-panel-person__people button:after {
-    content: "";
-    display: block;
-    width: 20px;
-    height: 17.23px;
-    margin-left: auto;
-    background-image: url(./images/arrow.svg);
-}
+/*ul#info-panel-person__people button:after {*/
+/*    content: "";*/
+/*    display: block;*/
+/*    width: 20px;*/
+/*    height: 17.23px;*/
+/*    margin-left: auto;*/
+/*    background-image: url(./images/arrow.svg);*/
+/*}*/
 
 /* Individual Profile */
+
+/* Alumni Group Select Widget */
+#info-panel-student__group-select {
+    appearance: none;
+    padding: 0.8rem 2.2rem 0.8rem 1.5rem;
+    background-image: url(images/arrow-down.svg);
+    background-repeat: no-repeat;
+    background-position: right 1rem top 50%;
+    color: #0080FF;
+    background-color: white;
+    border: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 3rem;
+
+    margin-bottom: 2rem;
+}
 
 #map-section__info-panel-person__back {
     width: 7.5rem;
@@ -454,6 +481,19 @@ ul#info-panel-person__people button:after {
     font-size: 1rem;
     line-height: 1.1rem;
     text-align: center;
+}
+
+.map-section__info-panel-field--hidden {
+    display: none;
+}
+
+.map-section__info-panel-field__sub-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+#info-panel-student__additional {
+    padding-left: 1.5rem;
 }
 
 /* Hide field labels  */

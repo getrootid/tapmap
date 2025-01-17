@@ -8,6 +8,7 @@ var defaultLocation = [38.505, -100.09];
 let peopleData = [];
 let alumniGroupTitles = [];
 let alumniGroups = [];
+let selectedAlumniGroup = null;
 
 const hidePanelButton = document.getElementById('map-section__info-panel-header__hide-panel');
 const showPanelButton = document.getElementById('map-section__info-panel-header__show-panel');
@@ -382,12 +383,21 @@ function updatePersonInfoWindow(personData) {
   const elImage = document.getElementById('info-panel-person__photo');
   const elEmployer = document.getElementById('info-panel-student__employer');
   const elLawSchool = document.getElementById('info-panel-student__school');
+  const elAdditionalInfo = document.getElementById('info-panel-student__additional');
+
   const elWrapper = elName.parentElement;
 
   elName.innerHTML = personData.name;
   elEmployer.innerHTML = personData.employer;
   elLawSchool.innerHTML = personData.lawSchool;
+  elAdditionalInfo.innerHTML = personData.additional;
 
+  // If additional is empty, set a hidden flag on .map-section__info-panel-field--additional
+  if(personData.additional) {
+    elAdditionalInfo.parentElement.classList.remove('map-section__info-panel-field--hidden');
+  } else {
+    elAdditionalInfo.parentElement.classList.add('map-section__info-panel-field--hidden');
+  }
 
   if(personData.image) {
     elImage.setAttribute('src', personData.image);
@@ -463,11 +473,16 @@ function showPersonInfoWindow() {
       onAlumniDisplayGroupChange(e.target.value);
     }
 
-    // Have the first option be the default, and show that group in the list.
-    elAlumniGrouplist.selectedIndex = 0;
+    if(selectedAlumniGroup) {
+      elAlumniGrouplist.value = selectedAlumniGroup;
+      onAlumniDisplayGroupChange(selectedAlumniGroup);
+    } else {
+      // Have the first option be the default, and show that group in the list.
+      elAlumniGrouplist.selectedIndex = 0;
 
-    const group = elAlumniGrouplist.options[0].value;
-    onAlumniDisplayGroupChange(group);
+      const group = elAlumniGrouplist.options[0].value;
+      onAlumniDisplayGroupChange(group);
+    }
 
 
     personList.setAttribute('aria-hidden', false);
@@ -478,6 +493,7 @@ function showPersonInfoWindow() {
 }
 
 function onAlumniDisplayGroupChange(groupName) {
+  selectedAlumniGroup = groupName;
   const groupData = alumniGroups[groupName];
   const elAlumniList = document.getElementById('info-panel-person__people');
 
