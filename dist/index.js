@@ -56,6 +56,11 @@ function togglePanelClick(e) {
   }
 }
 
+function showPanel() {
+  const panelWrapper = document.getElementById('map-section__info-panel-wrapper');
+  panelWrapper.classList.remove('map-section__info-panel-wrapper--hidden');
+}
+
 function InitializeMap() {
   const mapDiv = document.getElementById("map-section__map");
   map = L.map(mapDiv).setView(defaultLocation, 4);
@@ -292,6 +297,8 @@ function onPersonMarkerClick(e) {
 
   // Update the person tab.
   SelectPerson(marker.person);
+
+  showPanel();
 }
 
 /**
@@ -307,6 +314,9 @@ function onStateClick(e) {
   SelectLayer(layer);
   updateStateInfoWindow(layer.feature.properties);
   showStateInfoWindow();
+
+  // If the panel is hidden, show it.
+  showPanel();
 }
 
 function onStateListButtonPress(e) {
