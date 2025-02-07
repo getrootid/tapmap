@@ -4,7 +4,10 @@ var map;
 var stateLayers = null;
 var selectedLayer = null;
 var selectedPerson = null;
-var defaultLocation = [38.505, -100.09];
+var defaultLocation = [30.505, -40.09];
+const unitedStatesPosition = [37.8, -96];
+const unitedStatesZoom = 4;
+const defaultZoom = 2;
 let peopleData = [];
 let alumniGroupTitles = [];
 let alumniGroups = [];
@@ -63,7 +66,7 @@ function showPanel() {
 
 function InitializeMap() {
   const mapDiv = document.getElementById("map-section__map");
-  map = L.map(mapDiv).setView(defaultLocation, 4);
+  map = L.map(mapDiv).setView(defaultLocation, defaultZoom);
 
   map.createPane("locationMarkers");
   map.getPane("locationMarkers").style.zIndex = 999;
@@ -88,8 +91,6 @@ function InitializeMap() {
   });
 
   resizeObserver.observe(mapDiv);
-
-
 
   ShowPeople();
   ShowStates();
@@ -184,8 +185,6 @@ function ShowPeople() {
     download: true,
     header: true,
     complete: function(results) {
-      console.log(results);
-
       peopleData = results.data;
 
       peopleData.forEach(person => {
@@ -348,10 +347,7 @@ function getStateLayerById(id) {
   var foundLayer = null;
 
   stateLayers.eachLayer(layer => {
-    console.log(layer.feature.id);
-    console.log(id);
-    console.log('===');
-    if(layer.feature.id == id) {
+    if(layer.feature.id === id) {
       foundLayer = layer;
     }
   });
@@ -366,26 +362,36 @@ function updateStateInfoWindow(stateData) {
   const elSchoolCount = document.getElementById('info-panel-state__num-schools');
   const elStateText = document.getElementById('map-section__info-panel-state__text');
 
-
-  //const elLawSchoolsWrapper = document.getElementById('info-panel-state__law-schools');
-
+  const elStudentCountParent = elStudentCount.parentElement;
+  const elVolunteerCountParent = elVolunteerCount.parentElement;
+  const elSchoolCountParent = elSchoolCount.parentElement;
 
   elTitle.innerHTML = stateData.name;
+
   elStudentCount.innerHTML = stateData.students;
   elVolunteerCount.innerHTML = stateData.volunteers;
   elSchoolCount.innerHTML = stateData.schools;
 
   elStateText.innerHTML = stateData.textContent;
 
-  // elLawSchoolsWrapper.replaceChildren();
-  //
-  // if(stateData.lawSchools) {
-  //   stateData.lawSchools.forEach(school => {
-  //     const li = document.createElement('li');
-  //     li.appendChild(document.createTextNode(school));
-  //     elLawSchoolsWrapper.appendChild(li);
-  //   });
-  // }
+  // If any of the data is missing, or set to 0, hide the element.
+  if(!stateData.volunteers || stateData.volunteers === 0 || stateData.volunteers === "0") {
+    elVolunteerCountParent.classList.add('map-section__info-panel-field--hidden');
+  } else {
+    elVolunteerCountParent.classList.remove('map-section__info-panel-field--hidden');
+  }
+
+  if(!stateData.schools || stateData.schools === 0 || stateData.schools === "0") {
+    elSchoolCountParent.classList.add('map-section__info-panel-field--hidden');
+  } else {
+    elSchoolCountParent.classList.remove('map-section__info-panel-field--hidden');
+  }
+
+  if(!stateData.students || stateData.students === 0 || stateData.students === "0") {
+    elStudentCountParent.classList.add('map-section__info-panel-field--hidden');
+  } else {
+    elStudentCountParent.classList.remove('map-section__info-panel-field--hidden');
+  }
 }
 
 function updatePersonInfoWindow(personData) {
@@ -394,6 +400,8 @@ function updatePersonInfoWindow(personData) {
   const elEmployer = document.getElementById('info-panel-student__employer');
   const elLawSchool = document.getElementById('info-panel-student__school');
   const elAdditionalInfo = document.getElementById('info-panel-student__additional');
+  const elTestimonialsWrapper = document.getElementById('testimonials');
+  const elTestimonialsList = document.getElementById('info-panel-student__testimonials-list');
 
   const elWrapper = elName.parentElement;
 
@@ -401,6 +409,27 @@ function updatePersonInfoWindow(personData) {
   elEmployer.innerHTML = personData.employer;
   elLawSchool.innerHTML = personData.lawSchool;
   elAdditionalInfo.innerHTML = personData.additional;
+
+  // Each person can have three testimonials, denoted testimonial_n_text, testimonial_n_link
+  // If any of them are filled in the wrapper should be visible. If all three aren't filled in
+  // if shouldn't be visible.
+  // The testimonials should be rendered as a list of links and placed in elTestimonialsList.
+  const testimonials = [];
+  for(let i = 1; i <= 3; i++) {
+    const text = personData[`testimonial_${i}_text`];
+    const link = personData[`testimonial_${i}_link`];
+
+    if(text && link) {
+      testimonials.push(`<a class="info-panel-student__testimonial-link" target="_blank" href="${link}">${text} <span class="visually-hidden">Link opens in new tab.</span></span></a>`);
+    }
+  }
+  if(testimonials.length > 0) {
+    elTestimonialsList.innerHTML = testimonials.join(', ');
+    elTestimonialsWrapper.classList.remove('map-section__info-panel-field--hidden');
+  } else {
+    elTestimonialsWrapper.classList.add('map-section__info-panel-field--hidden');
+  }
+
 
   // If additional is empty, set a hidden flag on .map-section__info-panel-field--additional
   if(personData.additional) {
@@ -610,7 +639,8 @@ function onTabButtonClick(e) {
 
   // If the button is in the first list item, reset the map view
   if(button.parentElement == document.querySelector('.map-section__tabs li:first-child')) {
-    map.setView(defaultLocation, 4);
+    DeSelectLayer(selectedLayer);
+    map.setView(unitedStatesPosition, unitedStatesZoom);
   }
 
   // get the curently active button. it will have aria-selected=true

@@ -206,6 +206,10 @@ button {
     font-weight: 400;
 }
 
+#info-panel-body-0 h3 {
+    text-decoration: underline;
+}
+
 .map-section__info-panel-body--us {
     padding: 0 1.5rem 1.5rem 1.5rem;
     font-size: 0.9rem;
@@ -306,14 +310,20 @@ ul#info-panel-state__states button:after {
 .map-section__info-panel-state__counts {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
+    justify-content: flex-start;
     margin-bottom: 2rem;
+    gap: 2rem;
 }
 
 .map-section__info-panel-state__counts .map-section__info-panel-field {
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+
+.map-section__info-panel-field--hidden {
+    display: none !important;
 }
 
 .map-section__info-panel__icon {
@@ -382,6 +392,18 @@ ul#info-panel-person__people button {
     border: 0;
 }
 
+ul#info-panel-person__people button:after {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 17.23px;
+    margin-left: 15px;
+    background-image: url(./images/white-left-arrow.svg);
+    transform: rotate(180deg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
 /*ul#info-panel-person__people button:before {*/
 /*    content: "";*/
 /*    display: block;*/
@@ -401,6 +423,27 @@ ul#info-panel-person__people button {
 /*}*/
 
 /* Individual Profile */
+
+.info-panel-student__testimonial-link {
+    color: white;
+    text-decoration: none;
+}
+
+.info-panel-student__testimonial-link:hover,.info-panel-student__testimonial-link:focus {
+    text-decoration: underline;
+}
+
+.visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
 
 /* Alumni Group Select Widget */
 #info-panel-student__group-select {
@@ -430,7 +473,7 @@ ul#info-panel-person__people button {
     border-radius: 360px;
     color: white;
     border: 1px solid #0080FF;
-    margin: 3.2rem 3.5rem 1.6rem auto;
+    margin: 2rem 0 1.6rem auto;
     cursor: pointer;
 }
 
