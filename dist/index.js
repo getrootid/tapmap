@@ -36,7 +36,10 @@ const hoverStateStyle = {
   opacity: 1,
   dashArray: '',
   color: "#cccccc",
-  weight: 2
+  weight: 2,
+  stroke: "#cccccc",
+  strokeWeight: 2,
+  strokeOpacity: 1,
 };
 
 const selectedStateStyle = {
@@ -93,7 +96,6 @@ function InitializeMap() {
   resizeObserver.observe(mapDiv);
 
   ShowPeople();
-  ShowStates();
 
   return map;
 }
@@ -107,7 +109,7 @@ function InitializeMap() {
 function PopulateStatesList() {
   const elStateList = document.getElementById('info-panel-state__states');
 
-  const stateDataTSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSNds5T_0uWILX-HwgrmBtH_I5gB1lDNOl3PfE0nMxrsWA-47RxXKEafvV91e1raSXhxKTXq9209Vx1/pub?gid=1790286957&single=true&output=tsv";
+  //const stateDataTSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSNds5T_0uWILX-HwgrmBtH_I5gB1lDNOl3PfE0nMxrsWA-47RxXKEafvV91e1raSXhxKTXq9209Vx1/pub?gid=1790286957&single=true&output=tsv";
   const stateDataCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSNds5T_0uWILX-HwgrmBtH_I5gB1lDNOl3PfE0nMxrsWA-47RxXKEafvV91e1raSXhxKTXq9209Vx1/pub?gid=1790286957&single=true&output=csv";
 
   // Get the state data from the Google Sheet and combine it with the state geojson.
@@ -332,6 +334,10 @@ function onStateMouseOver(e) {
 
   if(layer !== selectedLayer) {
     layer.setStyle(hoverStateStyle);
+
+    // Make this the topmost layer
+    layer.bringToFront();
+
   }
 }
 
