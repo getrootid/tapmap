@@ -8,6 +8,10 @@
     --font--main: source-serif-pro, serif;
 }
 
+ul {
+    padding-left: 1.5rem;
+}
+
 .leaflet-container {
     font-family: var(--font--main);
 }
@@ -427,6 +431,19 @@ ul#info-panel-person__people button:after {
 .info-panel-student__testimonial-link {
     color: white;
     text-decoration: none;
+    display: flex;
+}
+
+.info-panel-student__testimonial-link:after {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 17.23px;
+    margin-left: 15px;
+    background-image: url(./images/white-left-arrow.svg);
+    transform: rotate(180deg);
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .info-panel-student__testimonial-link:hover,.info-panel-student__testimonial-link:focus {

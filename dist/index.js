@@ -51,6 +51,24 @@ const selectedStateStyle = {
   weight: 5,
 };
 
+function updateUsText() {
+  // Get data from: https://docs.google.com/spreadsheets/d/e/2PACX-1vSNds5T_0uWILX-HwgrmBtH_I5gB1lDNOl3PfE0nMxrsWA-47RxXKEafvV91e1raSXhxKTXq9209Vx1/pub?output=csv
+  const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSNds5T_0uWILX-HwgrmBtH_I5gB1lDNOl3PfE0nMxrsWA-47RxXKEafvV91e1raSXhxKTXq9209Vx1/pub?output=csv";
+  const usTextElement = document.getElementById('info-panel-body__us__text');
+
+
+  Papa.parse(csvUrl, {
+    download: true,
+    header: true,
+    complete: function(results) {
+      const data = results.data[0];
+      // Convert newlines to html breaks.
+      data.us = data.us.replace(/\n/g, '<br />');
+      usTextElement.innerHTML = data.us;
+    }
+  });
+}
+
 function togglePanelClick(e) {
   const panel = document.getElementById('map-section__info-panel');
   const panelWrapper = document.getElementById('map-section__info-panel-wrapper');
@@ -372,6 +390,10 @@ function updateStateInfoWindow(stateData) {
   const elVolunteerCountParent = elVolunteerCount.parentElement;
   const elSchoolCountParent = elSchoolCount.parentElement;
 
+  const elStudentCountLabel = elStudentCountParent.querySelector('.map-section__info-panel-state_count-label');
+  const elVolunteerCountLabel = elVolunteerCountParent.querySelector('.map-section__info-panel-state_count-label');
+  const elSchoolCountLabel = elSchoolCountParent.querySelector('.map-section__info-panel-state_count-label');
+
   elTitle.innerHTML = stateData.name;
 
   elStudentCount.innerHTML = stateData.students;
@@ -379,6 +401,26 @@ function updateStateInfoWindow(stateData) {
   elSchoolCount.innerHTML = stateData.schools;
 
   elStateText.innerHTML = stateData.textContent;
+
+
+  // For the three labels, if the value is 1, change the text to not be plural.
+  if( parseInt(stateData.students) === 1) {
+    elStudentCountLabel.innerHTML = "Student";
+  } else {
+    elStudentCountLabel.innerHTML = "Students";
+  }
+
+  if( parseInt(stateData.volunteers) === 1) {
+    elVolunteerCountLabel.innerHTML = "Volunteer";
+  } else {
+    elVolunteerCountLabel.innerHTML = "Volunteers";
+  }
+
+  if( parseInt(stateData.schools) === 1) {
+    elSchoolCountLabel.innerHTML = "School";
+  } else {
+    elSchoolCountLabel.innerHTML = "Schools";
+  }
 
   // If any of the data is missing, or set to 0, hide the element.
   if(!stateData.volunteers || stateData.volunteers === 0 || stateData.volunteers === "0") {
@@ -683,7 +725,7 @@ function onTabButtonClick(e) {
   }
 }
 
-
+updateUsText();
 InitializeMap();
 PopulateStatesList();
 populatePeopleList();
