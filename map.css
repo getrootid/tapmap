@@ -450,6 +450,11 @@ ul#info-panel-person__people button:after {
     text-decoration: underline;
 }
 
+#info-panel-student__testimonials-list {
+    padding-left: 3rem;
+    line-height: 1.2;
+}
+
 .visually-hidden {
     border: 0;
     clip: rect(0 0 0 0);

@@ -468,11 +468,11 @@ function updatePersonInfoWindow(personData) {
     const link = personData[`testimonial_${i}_link`];
 
     if(text && link) {
-      testimonials.push(`<a class="info-panel-student__testimonial-link" target="_blank" href="${link}">${text} <span class="visually-hidden">Link opens in new tab.</span></span></a>`);
+      testimonials.push(`<li><a class="info-panel-student__testimonial-link" target="_blank" href="${link}">${text} <span class="visually-hidden">Link opens in new tab.</span></span></a></li>`);
     }
   }
   if(testimonials.length > 0) {
-    elTestimonialsList.innerHTML = testimonials.join(', ');
+    elTestimonialsList.innerHTML = testimonials.join('');
     elTestimonialsWrapper.classList.remove('map-section__info-panel-field--hidden');
   } else {
     elTestimonialsWrapper.classList.add('map-section__info-panel-field--hidden');
